@@ -3,10 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Auth0Provider } from "@auth0/auth0-react";
+import '@elastic/eui/dist/eui_theme_light.css';
+
+import { EuiProvider } from '@elastic/eui';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <Auth0Provider
+          domain="dev-f9262uav.us.auth0.com"
+          clientId="DGHtFVGclDRhNXnmelCjlQYKXYPQugE8"
+          redirectUri={window.location.origin}
+      >
+          <EuiProvider colorMode="light">
+            <App />
+          </EuiProvider>
+      </Auth0Provider>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
