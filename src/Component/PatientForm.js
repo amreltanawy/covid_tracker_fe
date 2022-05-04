@@ -152,8 +152,9 @@ export default () => {
             iconType="plus"
             display="fill"
             size="m"
+            iconSize="xl"
             onClick={onButton2Click}
-            style={{borderRadius:'50%'}}
+            style={{borderRadius:'50%', height:'7vw',width:'7vw'}}
         />
     );
 
@@ -168,7 +169,7 @@ export default () => {
                 isOpen={isPopover2Open}
                 closePopover={closePopover2}
                 initialFocus="[name='popfirst']"
-                style={{maxWidth:50}}
+                style={{maxWidth:100}}
             >
                 <div style={{ width: '300px' }}><FormSample2
                     onChange={onChange}

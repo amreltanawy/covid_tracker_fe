@@ -6,8 +6,9 @@ export default (props) => {
     const [onselect, setOnselect] = useState({});
     const mapStyle = {
         height: '55vh',
-        width: '85%',
+        width: '100%',
         margin: '0 auto',
+        zIndex: 0
     }
 
     const mapPolygonColorToDensity=(density => {
@@ -58,7 +59,7 @@ export default (props) => {
         });
     }
     return (
-        <MapContainer style={{ height: "50vh", width: "90vw" }} center={[51.505, -0.09]} zoom={2} scrollWheelZoom={false}>
+        <MapContainer style={{ height: "50vh", width: "100%", zIndex:0 }} center={[51.505, -0.09]} zoom={2} scrollWheelZoom={false}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
