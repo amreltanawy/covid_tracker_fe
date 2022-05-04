@@ -9,7 +9,9 @@ import {
 import Navbar from "./Component/Navbar";
 import PatientForm from "./Component/PatientForm";
 import { useAuth0 } from '@auth0/auth0-react';
-
+import Dashboard from "./Pages/Dashboard";
+import UserProfile from "./Pages/UserProfile";
+import LoginScreen from "./Component/LoginScreen";
 
 function App() {
 
@@ -33,28 +35,15 @@ function App() {
     return (
         <Router>
           <Navbar/>
-          <PatientForm />
           <div>
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="/about">About</Link>
-                </li>
-                <li>
-                  <Link to="/users">Users</Link>
-                </li>
-              </ul>
-            </nav>
+
 
             {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
             <Routes>
               <Route path="/about" element={<h2>about</h2>}/>
-              <Route path="/users" element={<h2>users</h2>}/>
-              <Route path="/" element={<h2>home</h2>}/>
+              <Route path="/users" element={<UserProfile />}/>
+              <Route path="/" element={<Dashboard />}/>
             </Routes>
           </div>
         </Router>
@@ -63,8 +52,8 @@ function App() {
     return (
         <Router>
           <Navbar/>
-          <button onClick={loginWithRedirect}>Log in</button>
-          </Router>
+          <LoginScreen onClick={loginWithRedirect}/>
+        </Router>
 
     );
   }
