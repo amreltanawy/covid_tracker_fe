@@ -1,5 +1,7 @@
 import React from 'react';
-import {EuiSpacer} from "@elastic/eui";
+import {
+    EuiSpacer,
+    EuiPageTemplate} from "@elastic/eui";
 import PatientForm from '../Component/PatientForm';
 import Map from '../Component/Map';
 import DataTable from "../Component/DataTable";
@@ -16,7 +18,7 @@ export default (props) => {
             weight: 67,
             gender: "other",
             coordinates:{
-                lon:31.1011,
+                lon:35.1011,
                 lat:-32.121
             }
         },
@@ -29,7 +31,7 @@ export default (props) => {
             weight: 67,
             gender: "other",
             coordinates:{
-                lon:31.1011,
+                lon:27.1011,
                 lat:-32.121
             }
         },
@@ -42,7 +44,7 @@ export default (props) => {
             weight: 67,
             gender: "other",
             coordinates:{
-                lon:31.1011,
+                lon:25.1011,
                 lat:-32.121
             }
         },
@@ -62,7 +64,14 @@ export default (props) => {
     ]
 
     return (
-        <div style={{ width:'90vw', margin:"0 auto"}} className="dashBoardContainer">
+        <EuiPageTemplate
+            restrictWidth={false}
+            template="empty"
+            pageHeader={{
+                pageTitle: 'Dashboard',
+            }}
+        >
+            <div style={{ width:'90vw', margin:"0 auto"}} className="dashBoardContainer">
             <div style={{position:"relative"}} className="mapContainer">
                 <Map data={data} />
                 <div style={{position:"absolute", zIndex:10,bottom:'10%', right:'5%'}}>
@@ -74,5 +83,6 @@ export default (props) => {
                 <DataTable data={data} />
             </div>
         </div>
+        </EuiPageTemplate>
     )
 }
