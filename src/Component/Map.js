@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, GeoJSON, useMap, Marker, Popup } from 'react-l
 import geoData from '../map.geo.json';
 export default (props) => {
 
+    const {data} = props;
     const [onselect, setOnselect] = useState({});
     const mapStyle = {
         height: '55vh',
@@ -70,6 +71,12 @@ export default (props) => {
                 style={style}
                 onEachFeature={onEachFeature}
             />
+            {data && data.map(item=>(
+                <Marker position={[item.coordinates.lat,item.coordinates.lon]}>
+                <Popup>
+                    {item.name} temprature is {item.temprature}.
+                </Popup>
+            </Marker>))}
 
         </MapContainer>
     )
