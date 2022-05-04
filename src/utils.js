@@ -21,5 +21,33 @@ const fetchCountryFromCoordinates = async (geoLocationData) => {
     return data[0].country.toLowerCase();
 }
 
+const genericCompare = (a,b) => {
 
-export {fetchCountryFromCoordinates}
+    if(typeof a === "string"){
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+    }
+    if (a < b) {
+        return -1;
+    }
+    if (a > b) {
+        return 1;
+    }
+    return 0;
+}
+
+
+const getPaginatedData = (data = [],pageIndex,pageSize,sortField,sortDirection) =>{
+
+    let pageOfItems = []
+    let totalItemCount = data.length || 0;
+
+    let sortingDirection = sortDirection === "asc"? 1 : -1;
+
+    data.sort((a,b)=> sortingDirection * genericCompare(a[sortField],b[sortField]))
+
+    pageOfItems = data.slice((pageIndex)*pageSize,(pageIndex+1)*pageSize);
+    console.log("debugging getPaginated data",{data,pageOfItems})
+    return {pageOfItems,totalItemCount}
+}
+export {fetchCountryFromCoordinates,getPaginatedData}
