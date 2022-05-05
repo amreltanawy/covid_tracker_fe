@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Link} from 'react-router-dom'
 import {
     EuiButtonEmpty,
     EuiContextMenuPanel,
@@ -27,9 +28,9 @@ export default () => {
         <EuiContextMenuItem
             key="edit"
             icon="pencil"
-            onClick={()=>{closePopover(); window.location.href = "/users";}}
+            onClick={closePopover}
         >
-            Edit
+            <Link to="/users">Edit</Link>
         </EuiContextMenuItem>,
         <EuiContextMenuItem
             key="share" icon="push"
