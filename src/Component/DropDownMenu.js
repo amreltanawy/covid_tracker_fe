@@ -6,10 +6,10 @@ import {
     EuiPopover,
     useGeneratedHtmlId, EuiHeaderSectionItemButton, EuiAvatar,
 } from '@elastic/eui';
-import {useAuth0} from "@auth0/auth0-react";
+import {getUser, logout} from "../Services/AuthService";
 
 export default () => {
-    let {user}= useAuth0();
+    let user= getUser();
     const [isPopoverOpen, setPopover] = useState(false);
     const smallContextMenuPopoverId = useGeneratedHtmlId({
         prefix: 'smallContextMenuPopover',
@@ -24,10 +24,17 @@ export default () => {
     };
 
     const items = [
-        <EuiContextMenuItem key="edit" icon="pencil" onClick={closePopover}>
+        <EuiContextMenuItem
+            key="edit"
+            icon="pencil"
+            onClick={()=>{closePopover(); window.location.href = "/users";}}
+        >
             Edit
         </EuiContextMenuItem>,
-        <EuiContextMenuItem key="share" icon="push" onClick={closePopover}>
+        <EuiContextMenuItem
+            key="share" icon="push"
+            onClick={()=>{ closePopover(); logout()}}
+        >
             Logout
         </EuiContextMenuItem>,
     ];
@@ -35,7 +42,7 @@ export default () => {
     const button = (
         <EuiButtonEmpty iconType="arrowDown" iconSide="right" onClick={onButtonClick}>
             <EuiHeaderSectionItemButton aria-label="Spaces menu">
-                <EuiAvatar type="space" name={user.nickname} size="s" />
+                <EuiAvatar type="space" name={user.nickname || user.email} size="s" />
             </EuiHeaderSectionItemButton>
         </EuiButtonEmpty>
     );

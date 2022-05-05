@@ -10,12 +10,12 @@ import {
     EuiAvatar,
     EuiIcon
 } from '@elastic/eui';
-import {useAuth0} from "@auth0/auth0-react";
+import {isAuthenticated,getUser} from "../Services/AuthService";
 import DropDownMenu from "./DropDownMenu";
 
 export default () => {
-    let {user,isAuthenticated,loginWithRedirect}= useAuth0();
 
+    let user = getUser();
     console.log("tanawy is testing ", user)
     if(!isAuthenticated){
         return (
@@ -30,7 +30,7 @@ export default () => {
 
                             Home</Link></EuiHeaderLink>
 
-                        <EuiHeaderLink><Link to="/login" onClick={loginWithRedirect}><EuiIcon type="alert" />
+                        <EuiHeaderLink><Link to="/login"><EuiIcon type="alert" />
 
                             login</Link></EuiHeaderLink>
 

@@ -8,30 +8,17 @@ import {
 } from "react-router-dom";
 import Navbar from "./Component/Navbar";
 import PatientForm from "./Component/PatientForm";
-import { useAuth0 } from '@auth0/auth0-react';
 import Dashboard from "./Pages/Dashboard";
 import UserProfile from "./Pages/UserProfile";
 import LoginScreen from "./Component/LoginScreen";
-
+import LoginForm from "./Component/LoginForm";
+import {isAuthenticated} from "./Services/AuthService";
 function App() {
 
-  const {
-    isLoading,
-    isAuthenticated,
-    error,
-    user,
-    loginWithRedirect,
-    logout,
-  } = useAuth0();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>Oops... {error.message}</div>;
-  }
 
-  if (isAuthenticated) {
+
+  if (isAuthenticated()) {
     return (
         <Router>
           <Navbar/>
@@ -41,7 +28,6 @@ function App() {
             {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
             <Routes>
-              <Route path="/about" element={<h2>about</h2>}/>
               <Route path="/users" element={<UserProfile />}/>
               <Route path="/" element={<Dashboard />}/>
             </Routes>
@@ -52,7 +38,7 @@ function App() {
     return (
         <Router>
           <Navbar/>
-          <LoginScreen onClick={loginWithRedirect}/>
+          <LoginForm />
         </Router>
 
     );
