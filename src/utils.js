@@ -1,4 +1,4 @@
-import {POSITION_STACK_URL, POSITION_STACK_ACCESS} from './env';
+import {POSITION_STACK_URL, POSITION_STACK_ACCESS, BACKEND_URL} from './env';
 const fetchCountryFromCoordinates = async (geoLocationData) => {
 
     if (!geoLocationData || !geoLocationData.coords){
@@ -50,4 +50,24 @@ const getPaginatedData = (data = [],pageIndex,pageSize,sortField,sortDirection) 
     console.log("debugging getPaginated data",{data,pageOfItems})
     return {pageOfItems,totalItemCount}
 }
+
+const fetchTempratureData = async (accessToken) => {
+   let response = await fetch(`${BACKEND_URL}/entries`);
+
+   return await response.json();
+}
+
+const postTempratureDate = async (accessToken,data) => {
+    let response = await fetch(`${BACKEND_URL}/entries`,{
+        method:'POST',
+        headers: {
+            "Content-type": "application/json"
+        },
+        data:JSON.stringify(data)
+    });
+
+    return await response.json();
+}
+
+
 export {fetchCountryFromCoordinates,getPaginatedData}
