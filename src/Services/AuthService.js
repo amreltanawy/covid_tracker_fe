@@ -116,6 +116,9 @@ const getUser = ()=>{
 
     let userObjectString = window.localStorage.getItem('_user');
     let userObject = JSON.parse(userObjectString);
+    if(!UserManager.isInitialized()){
+        UserManager.initialize(userObject.accessData.access_token);
+    }
     return userObject.user;
 }
 
