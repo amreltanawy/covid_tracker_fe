@@ -83,6 +83,7 @@ export default (props) => {
             field: 'temprature',
             name: 'Temprature',
             truncateText: true,
+            sortable: true,
             mobileOptions: {
                 show: true,
             },
@@ -112,6 +113,7 @@ export default (props) => {
             field: 'weight',
             name: 'Weight',
             truncateText: true,
+            sortable: true,
             mobileOptions: {
                 show: false,
             },
@@ -119,6 +121,7 @@ export default (props) => {
         {
             field: 'gender',
             name: 'Gender',
+            sortable: true,
             truncateText: true,
             mobileOptions: {
                 show: false,
@@ -140,7 +143,7 @@ export default (props) => {
             field: sortField,
             direction: sortDirection,
         },
-        enableAllColumns: true,
+        enableAllColumns: false,
     };
 
     return (
