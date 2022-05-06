@@ -100,6 +100,7 @@ const isAuthenticated = () => {
 const logout = ()=>{
     window.localStorage.removeItem('_user');
     window.localStorage.clear();
+    window.location.href = "/";
 }
 
 const getAccessToken = () =>{

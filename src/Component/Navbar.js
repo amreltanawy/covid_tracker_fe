@@ -17,7 +17,7 @@ export default () => {
 
     let user = getUser();
     console.log("tanawy is testing ", user)
-    if(!isAuthenticated){
+    if(!isAuthenticated()){
         return (
             <EuiHeader>
                 <EuiHeaderSectionItem border="right">
