@@ -14,10 +14,18 @@ import {
     EuiSelect
 } from '@elastic/eui';
 import moment from 'moment';
-import {fetchCountryFromCoordinates} from '../utils'
+import {fetchCountryFromCoordinates} from '../utils';
+import {getUser} from "../Services/AuthService";
 
 const FormSample2 = (props) => {
-    const {rangeWithShowValueId,temperatureValue,onChange} = props;
+    const {rangeWithShowValueId, onSubmit } = props;
+    const user = getUser()
+    let [country, setCountry] = useState("egypt");
+    let [coordinates, setCoordinates] = useState({lat:0,lon:0});
+    let [temprature, setTemprature] = useState(35);
+    let [weight, setWeight] = useState(undefined);
+    let [dateOfBirth, setDateOfBirth] = useState(undefined);
+    let [gender, setGender] = useState("male");
     const options = [
         { value: 'male', text: 'Male' },
         { value: 'female', text: 'Femaile' },
@@ -55,8 +63,11 @@ const FormSample2 = (props) => {
 
     const success = (position) => {
         console.log("successfully got the coordinates", position);
+        let coords = position.coords;
+        setCoordinates({lat: coords.latitude,lon:coords.longitude})
         fetchCountryFromCoordinates(position).then(res=>{
-            console.log("successfully retrieved country ptient form",res);
+            console.log("successfully retrieved country patient form",res);
+            setCountry(res);
         }).catch(err =>{
             console.log("error while retrieving country",err)
         });
@@ -65,9 +76,22 @@ const FormSample2 = (props) => {
     const failure = (err) => {
         console.error("Failed to get coordinates", err)
     }
+    const onFormSubmit = () =>{
+        let data = {
+            temprature,
+            country,
+            weight,
+            gender,
+            coordinates,
+            dateOfBirth,
+            name:user.name
+        }
+
+        onSubmit(data);
+    }
 
     return(
-        <EuiForm component="form" onChange={e=>{console.log("form submitted",e)}}>
+        <EuiForm component="form" >
 
             <EuiFormRow label="Temprature" helpText="select your temprature in celisus">
                 <EuiRange
@@ -77,8 +101,8 @@ const FormSample2 = (props) => {
                     name="poprange"
                     showLabels
                     showValue
-                    value={temperatureValue}
-                    onChange={onChange}
+                    onChange={(event)=>{setTemprature(event.target.value)}}
+                    value={temprature}
                     step={0.1}
                 />
             </EuiFormRow>
@@ -89,7 +113,7 @@ const FormSample2 = (props) => {
             <EuiSpacer/>
             <EuiFormRow label="Country">
                 <EuiFieldText
-                    value={"Egypt"}
+                    value={country}
                     disabled
                 />
             </EuiFormRow>
@@ -99,30 +123,31 @@ const FormSample2 = (props) => {
 
                     selected={moment('1990-09-28')}
                     openToDate={moment('1990-09-28')}
-                    onChange={(e) => console.log(e)}
+                    onChange={(value)=>{setDateOfBirth(value)}}
+                    value={dateOfBirth}
                 />
             </EuiFormRow>
             <EuiFormRow label="weight">
                 <EuiFieldNumber
-                    value={50}
-                    onChange={(e) => console.log(e)}
+                    onChange={(event)=>{setWeight(event.target.value)}}
+                    value={weight}
                 />
             </EuiFormRow>
             <EuiFormRow label="Gender">
                 <EuiSelect
                     options={options}
-                    value={"male"}
-                    onChange={(e) => console.log(e)}
+                    onChange={(event)=>{setGender(event.target.value)}}
+                    value={gender}
                 />
             </EuiFormRow>
-            <EuiButton fullWidth>Add</EuiButton>
+            <EuiButton fullWidth onClick={onFormSubmit}>Add</EuiButton>
         </EuiForm>
     )};
 
-export default () => {
+export default (props) => {
     const [isPopover2Open, setIsPopover2Open] = useState(false);
-    const [temperatureValue, setTemperatureValue] = useState(37);
 
+    const {onSubmit} = props;
     const rangeWithShowValueId = useGeneratedHtmlId({
         prefix: 'rangeWithShowValue',
     });
@@ -133,9 +158,7 @@ export default () => {
     const verticalFormSwitchId = useGeneratedHtmlId({
         prefix: 'verticalFormSwitch',
     });
-    const onChange = (e) => {
-        setTemperatureValue(e.target.value);
-    };
+
 
 
     const onButton2Click = () => {
@@ -172,8 +195,10 @@ export default () => {
                 style={{maxWidth:100}}
             >
                 <div style={{ width: '300px' }}><FormSample2
-                    onChange={onChange}
-                    temperatureValue={temperatureValue}
+                    onSubmit={(value) =>{onSubmit(value);
+                        closePopover2();
+                        window.location.reload();
+                    }}
                     rangeWithShowValueId={rangeWithShowValueId}
                 /></div>
             </EuiPopover>
