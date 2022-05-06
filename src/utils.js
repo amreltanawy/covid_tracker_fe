@@ -22,7 +22,9 @@ const fetchCountryFromCoordinates = async (geoLocationData) => {
 }
 
 const genericCompare = (a,b) => {
-
+    if(!a && !b) return 0;
+    if(!a) return -1;
+    if(!b) return 1;
     if(typeof a === "string"){
         a = a.toLowerCase();
         b = b.toLowerCase();
@@ -63,11 +65,16 @@ const postTempratureDate = async (accessToken,data) => {
         headers: {
             "Content-type": "application/json"
         },
-        data:JSON.stringify(data)
+        body: JSON.stringify(data)
     });
 
     return await response.json();
 }
 
 
-export {fetchCountryFromCoordinates,getPaginatedData}
+export {
+    fetchCountryFromCoordinates,
+    getPaginatedData,
+    fetchTempratureData,
+    postTempratureDate
+}
